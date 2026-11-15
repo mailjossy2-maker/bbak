@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A fictional banking simulator for portfolio and client demonstrations.">
+  <title>Northstar — Banking Simulator</title>
+  <style>
+    :root{--navy:#102a43;--blue:#1769aa;--blue2:#eaf3fb;--ink:#182b3a;--muted:#6b7c8e;--line:#e5ebf0;--bg:#f5f8fb;--white:#fff;--green:#18855b;--red:#b64040;--amber:#9a6a0a;--shadow:0 8px 24px rgba(16,42,67,.07);--radius:16px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.notice{background:#fff4d7;color:#614500;text-align:center;padding:9px 16px;font-size:12px;font-weight:700;letter-spacing:.02em;border-bottom:1px solid #f0dfab}.app{min-height:100vh}.topbar{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,54px);position:sticky;top:0;z-index:4}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;color:var(--navy);letter-spacing:-.03em}.logo{width:36px;height:36px;border-radius:11px;background:var(--blue);color:white;display:grid;place-items:center;font-size:19px}.top-right{display:flex;align-items:center;gap:14px}.mode-pill{font-size:12px;color:var(--blue);background:var(--blue2);border-radius:30px;padding:6px 11px;font-weight:700}.avatar{width:36px;height:36px;background:#dceaf5;color:var(--navy);border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800}.layout{max-width:1280px;margin:auto;display:grid;grid-template-columns:226px minmax(0,1fr);gap:28px;padding:28px 24px 54px}.sidebar{align-self:start;position:sticky;top:96px}.person{padding:13px 12px 20px;border-bottom:1px solid var(--line);margin-bottom:14px}.person strong{display:block;color:var(--navy);font-size:14px}.person small{color:var(--muted)}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;text-align:left;color:#526577;padding:11px 13px;border-radius:10px;font-weight:600;display:flex;align-items:center;gap:11px}.nav button:hover,.nav button.active{background:#eaf3fb;color:var(--blue)}.nav .ico{width:20px;text-align:center;font-size:17px}.content{min-width:0}.heading{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 22px}.heading h1{font-size:27px;letter-spacing:-.04em;color:var(--navy);margin:0}.heading p{margin:4px 0 0;color:var(--muted)}.button{border:1px solid var(--line);background:#fff;color:var(--navy);padding:10px 15px;border-radius:10px;font-weight:700}.button:hover{border-color:#a9c5dc;background:#f9fcff}.button.primary{background:var(--blue);color:white;border-color:var(--blue)}.button.primary:hover{background:#10558c}.button.danger{color:var(--red)}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:17px}.card{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.stat-label{color:var(--muted);font-size:13px;font-weight:600}.stat-value{font-size:27px;font-weight:800;color:var(--navy);letter-spacing:-.04em;margin:8px 0 2px}.stat-foot{font-size:12px;color:var(--green)}.main-grid{grid-template-columns:minmax(0,1.55fr) minmax(240px,.8fr)}.card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.card-title h2{font-size:16px;margin:0;color:var(--navy)}.text-link{border:0;background:none;color:var(--blue);font-weight:700;font-size:13px}.account{background:linear-gradient(130deg,#12385c,#1769aa);color:white;border:0;min-height:175px;position:relative;overflow:hidden}.account:after{content:"";position:absolute;width:230px;height:230px;border:1px solid rgba(255,255,255,.14);border-radius:50%;right:-73px;top:-100px;box-shadow:0 0 0 24px rgba(255,255,255,.04),0 0 0 50px rgba(255,255,255,.03)}.account .stat-label,.account .stat-value{color:white}.account .stat-value{font-size:30px}.account-meta{display:flex;justify-content:space-between;margin-top:22px;font-size:12px;color:#d3e4f3;position:relative;z-index:1}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.quick button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 7px;color:var(--navy);font-weight:700;font-size:12px}.quick button span{display:block;font-size:20px;margin-bottom:3px}.quick button:hover{background:#f4f9fd;border-color:#bdd3e5}.table-wrap{overflow:auto}.transactions{width:100%;border-collapse:collapse;min-width:440px}.transactions th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:10px 8px;border-bottom:1px solid var(--line)}.transactions td{padding:13px 8px;border-bottom:1px solid #edf1f4;font-size:13px}.transactions tr:last-child td{border-bottom:0}.merchant{font-weight:700;color:var(--navy)}.sub{display:block;color:var(--muted);font-size:11px;margin-top:2px}.amount{font-weight:800;text-align:right;white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--ink)}.status{display:inline-block;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:700}.status.active,.status.completed{background:#e8f5ee;color:var(--green)}.status.review{background:#fff4df;color:var(--amber)}.status.locked,.status.failed{background:#fdeaea;color:var(--red)}.search{width:min(260px,100%);border:1px solid var(--line);border-radius:9px;padding:9px 11px;outline:none}.search:focus,input:focus,select:focus{border-color:#7eafd4;box-shadow:0 0 0 3px #e8f3fb;outline:0}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:14px 0}.admin-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}.admin-summary .card{padding:17px}.admin-summary .stat-value{font-size:23px}.admin-table td{vertical-align:middle}.admin-table select{border:1px solid var(--line);border-radius:8px;padding:7px;background:white;color:var(--ink)}.empty{padding:28px;text-align:center;color:var(--muted)}.view{display:none}.view.active{display:block}.footer-note{color:var(--muted);font-size:12px;margin-top:16px}.login-wrap{min-height:calc(100vh - 53px);display:grid;place-items:center;padding:24px}.login-card{background:white;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);width:min(460px,100%);padding:30px}.login-card h1{margin:10px 0 5px;color:var(--navy);font-size:25px}.login-card p{color:var(--muted);margin:0 0 20px}.login-actions{display:grid;gap:10px}.login-actions button{width:100%;padding:13px}.login-card .demo-warning{background:#fff7e4;border-radius:10px;padding:11px;color:#715308;font-size:12px;margin-top:18px}.modal-backdrop{position:fixed;inset:0;background:rgba(9,26,40,.45);display:none;place-items:center;padding:20px;z-index:10}.modal-backdrop.open{display:grid}.modal{width:min(430px,100%);background:white;border-radius:18px;padding:23px;box-shadow:0 25px 70px rgba(0,0,0,.22)}.modal h2{margin:0 0 5px;color:var(--navy);font-size:20px}.modal p{color:var(--muted);font-size:13px;margin:0 0 17px}.field{display:grid;gap:6px;margin:13px 0}.field label{font-size:12px;font-weight:700;color:#4d6071}.field input,.field select{border:1px solid var(--line);border-radius:9px;padding:11px;color:var(--ink);width:100%}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#173850;color:white;padding:11px 16px;border-radius:10px;z-index:20;transition:.2s;pointer-events:none;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:850px){.layout{grid-template-columns:1fr;gap:16px;padding:18px 15px 35px}.sidebar{position:static}.person{display:none}.nav{display:flex;overflow:auto;gap:6px;padding-bottom:2px}.nav button{white-space:nowrap;padding:9px 11px}.nav .ico{width:auto}.main-grid{grid-template-columns:1fr}.topbar{height:62px}.stats{gap:10px}.card{padding:16px}}
+    @media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}.heading{align-items:flex-start;flex-direction:column}.heading h1{font-size:24px}.admin-summary{grid-template-columns:1fr}.top-right .mode-pill{display:none}.card{border-radius:13px}.quick{gap:6px}.quick button{padding:10px 4px}}
+  </style>
+</head>
+<body>
+  <div class="notice">DEMO SIMULATOR · Fictional data only · No real banking or payments</div>
+  <div id="login" class="login-wrap">
+    <section class="login-card">
+      <div class="brand"><span class="logo">✦</span> Northstar</div>
+      <h1>Banking, made clear.</h1>
+      <p>Explore a fictional online banking experience and its admin console.</p>
+      <div class="login-actions">
+        <button class="button primary" onclick="enterApp('customer')">Open customer experience</button>
+        <button class="button" onclick="enterApp('admin')">Open admin console</button>
+      </div>
+      <div class="demo-warning"><strong>Presentation build:</strong> there is no real sign-in. Do not enter or store actual passwords, financial details, or customer information.</div>
+    </section>
+  </div>
+  <div id="app" class="app" hidden>
+    <header class="topbar">
+      <div class="brand"><span class="logo">✦</span> Northstar</div>
+      <div class="top-right"><span class="mode-pill">SIMULATOR</span><span id="topName" style="font-weight:700;font-size:13px">Alex Morgan</span><span class="avatar" id="avatar">AM</span></div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="person"><strong id="sideName">Alex Morgan</strong><small id="sideRole">Personal account</small></div>
+        <nav class="nav" id="nav">
+          <button class="active" data-view="dashboard" onclick="showView('dashboard',this)"><span class="ico">▦</span> Overview</button>
+          <button data-view="transactions" onclick="showView('transactions',this)"><span class="ico">↕</span> Transactions</button>
+          <button data-view="accounts" onclick="showView('accounts',this)"><span class="ico">▤</span> Accounts</button>
+          <button id="adminNav" data-view="admin" onclick="showView('admin',this)" hidden><span class="ico">⚙</span> Admin console</button>
+          <button onclick="goHome()"><span class="ico">↪</span> Exit simulator</button>
+        </nav>
+      </aside>
+      <main class="content">
+        <section id="view-dashboard" class="view active">
+          <div class="heading"><div><h1>Good morning, <span id="greeting">Alex</span></h1><p>Here’s your fictional account snapshot.</p></div><button class="button" onclick="showView('transactions')">View activity →</button></div>
+          <div class="grid stats">
+            <article class="card stat"><div class="stat-label">Total balance</div><div class="stat-value" id="totalBalance">$12,480.65</div><div class="stat-foot">↑ 2.4% this month</div></article>
+            <article class="card stat"><div class="stat-label">Monthly income</div><div class="stat-value">$4,250.00</div><div class="stat-foot">Fictional demo figure</div></article>
+            <article class="card stat"><div class="stat-label">Monthly spending</div><div class="stat-value">$1,836.42</div><div class="stat-foot" style="color:var(--muted)">Across 18 transactions</div></article>
+          </div>
+          <div class="grid main-grid">
+            <div class="grid">
+              <article class="card account"><div class="stat-label">Everyday checking · •••• 4821</div><div class="stat-value" id="checkingBalance">$8,240.65</div><div class="account-meta"><span>Available balance</span><span>USD</span></div></article>
+              <article class="card"><div class="card-title"><h2>Recent transactions</h2><button class="text-link" onclick="showView('transactions')">See all</button></div><div class="table-wrap"><table class="transactions"><thead><tr><th>Details</th><th>Date</th><th style="text-align:right">Amount</th></tr></thead><tbody id="recentRows"></tbody></table></div></article>
+            </div>
+            <div class="grid" style="align-content:start">
+              <article class="card"><div class="card-title"><h2>Quick actions</h2></div><div class="quick"><button onclick="openTransfer()"><span>⇄</span>Transfer</button><button onclick="toast('Card controls are part of this simulator.')"><span>▣</span>Cards</button><button onclick="toast('Support messaging is not connected.')"><span>✉</span>Support</button></div></article>
+              <article class="card"><div class="card-title"><h2>Spending snapshot</h2><span class="sub">This month</span></div><div style="display:flex;justify-content:space-between;font-size:13px;margin:13px 0 6px"><span>Housing</span><strong>$950</strong></div><div style="height:7px;border-radius:8px;background:#eaf0f4"><div style="width:68%;height:100%;background:#1769aa;border-radius:8px"></div></div><div style="display:flex;justify-content:space-between;font-size:13px;margin:15px 0 6px"><span>Food & dining</span><strong>$426</strong></div><div style="height:7px;border-radius:8px;background:#eaf0f4"><div style="width:43%;height:100%;background:#53a8a2;border-radius:8px"></div></div><div style="display:flex;justify-content:space-between;font-size:13px;margin:15px 0 6px"><span>Transport</span><strong>$218</strong></div><div style="height:7px;border-radius:8px;background:#eaf0f4"><div style="width:25%;height:100%;background:#e3a84b;border-radius:8px"></div></div></article>
+            </div>
+          </div>
+          <p class="footer-note">All names, balances, and transactions are fictional and for demonstration only.</p>
+        </section>
+        <section id="view-transactions" class="view">
+          <div class="heading"><div><h1>Transactions</h1><p>Browse fictional activity for the demo account.</p></div><button class="button primary" onclick="openTransfer()">＋ Simulate transfer</button></div>
+          <article class="card"><div class="toolbar"><strong>Activity</strong><input id="transactionSearch" class="search" placeholder="Search transactions…" oninput="renderTransactions()" aria-label="Search transactions"></div><div class="table-wrap"><table class="transactions"><thead><tr><th>Details</th><th>Date</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="allRows"></tbody></table></div></article>
+        </section>
+        <section id="view-accounts" class="view">
+          <div class="heading"><div><h1>Your accounts</h1><p>Fictional account details for presentation purposes.</p></div></div>
+          <div class="grid stats"><article class="card account"><div class="stat-label">Everyday checking · •••• 4821</div><div class="stat-value" id="checkingBalance2">$8,240.65</div><div class="account-meta"><span>Available balance</span><span>USD</span></div></article><article class="card stat"><div class="stat-label">Rainy day savings · •••• 1904</div><div class="stat-value">$4,240.00</div><div class="stat-foot">Fictional demo figure</div></article></div>
+          <article class="card"><h2 style="font-size:16px;color:var(--navy);margin-top:0">Account details</h2><p style="color:var(--muted);font-size:13px">Account holder: Alex Morgan<br>Account type: Personal checking<br>Routing and account numbers are intentionally not shown.</p></article>
+        </section>
+        <section id="view-admin" class="view">
+          <div class="heading"><div><h1>Admin console</h1><p>Manage fictional demo users and their simulated account status.</p></div><span class="status review">DEMO ADMIN</span></div>
+          <div class="admin-summary"><article class="card stat"><div class="stat-label">Demo users</div><div class="stat-value">4</div></article><article class="card stat"><div class="stat-label">Active accounts</div><div class="stat-value" id="activeCount">3</div></article><article class="card stat"><div class="stat-label">Items for review</div><div class="stat-value">2</div></article></div>
+          <article class="card"><div class="toolbar"><strong>Fictional user directory</strong><input id="userSearch" class="search" placeholder="Search users…" oninput="renderUsers()" aria-label="Search users"></div><div class="table-wrap"><table class="transactions admin-table"><thead><tr><th>Customer</th><th>Demo ID</th><th>Account type</th><th>Status</th></tr></thead><tbody id="userRows"></tbody></table></div></article>
+          <p class="footer-note">This admin screen is not protected by authentication or server permissions. It is a visual prototype only.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><h2 id="modalTitle">Simulate a transfer</h2><p>No money moves. This only changes fictional demo activity in this browser.</p><form id="transferForm"><div class="field"><label for="recipient">Recipient name</label><input id="recipient" maxlength="40" placeholder="e.g. Jordan Lee" required></div><div class="field"><label for="transferAmount">Amount (USD)</label><input id="transferAmount" type="number" min="1" max="5000" step="0.01" placeholder="125.00" required></div><div class="modal-actions"><button type="button" class="button" onclick="closeModal()">Cancel</button><button class="button primary" type="submit">Simulate transfer</button></div></form></div></div>
+  <div class="toast" id="toast" role="status"></div>
+<script>
+  const initialTransactions = [
+    { name: 'Northstar Payroll', type: 'Income · Direct deposit', date: 'Nov 14, 2026', amount: 2450, status: 'Completed' },
+    { name: 'Harbor Market', type: 'Groceries · Card', date: 'Nov 13, 2026', amount: -68.42, status: 'Completed' },
+    { name: 'Metro Transit', type: 'Transport · Card', date: 'Nov 12, 2026', amount: -12.50, status: 'Completed' },
+    { name: 'Willow Utilities', type: 'Bills · Online payment', date: 'Nov 10, 2026', amount: -94.75, status: 'Completed' },
+    { name: 'Juniper Coffee', type: 'Dining · Card', date: 'Nov 09, 2026', amount: -8.60, status: 'Completed' },
+    { name: 'Transfer from savings', type: 'Internal transfer', date: 'Nov 07, 2026', amount: 300, status: 'Completed' },
+    { name: 'Cedar Books', type: 'Shopping · Card', date: 'Nov 05, 2026', amount: -32.99, status: 'Completed' }
+  ];
+  const users = [
+    { name: 'Alex Morgan', id: 'NS-1001', type: 'Checking + savings', status: 'Active' },
+    { name: 'Jamie Chen', id: 'NS-1002', type: 'Checking', status: 'Active' },
+    { name: 'Riley Patel', id: 'NS-1003', type: 'Checking + savings', status: 'Review' },
+    { name: 'Taylor Brooks', id: 'NS-1004', type: 'Checking', status: 'Locked' }
+  ];
+  let transactions = [...initialTransactions];
+  let currentRole = 'customer';
+  const money = n => `${n < 0 ? '−' : ''}$${Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+  function enterApp(role) {
+    currentRole = role;
+    document.getElementById('login').hidden = true;
+    document.getElementById('app').hidden = false;
+    const admin = role === 'admin';
+    document.getElementById('topName').textContent = admin ? 'Demo Admin' : 'Alex Morgan';
+    document.getElementById('sideName').textContent = admin ? 'Demo Admin' : 'Alex Morgan';
+    document.getElementById('sideRole').textContent = admin ? 'Administrator · Demo' : 'Personal account';
+    document.getElementById('greeting').textContent = admin ? 'Admin' : 'Alex';
+    document.getElementById('avatar').textContent = admin ? 'AD' : 'AM';
+    document.getElementById('adminNav').hidden = !admin;
+    showView(admin ? 'admin' : 'dashboard');
+  }
+  function goHome(){document.getElementById('app').hidden=true;document.getElementById('login').hidden=false}
+  function showView(name, button) {
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    const target=document.getElementById(`view-${name}`); if(target) target.classList.add('active');
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+    const navButton=button || document.querySelector(`.nav button[data-view="${name}"]`); if(navButton) navButton.classList.add('active');
+    if(name==='transactions') renderTransactions(); if(name==='admin') renderUsers();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function renderTransactions(){
+    const query=(document.getElementById('transactionSearch')?.value || '').toLowerCase();
+    const filtered=transactions.filter(t=>(t.name+' '+t.type+' '+t.status).toLowerCase().includes(query));
+    const rows=items=>items.map(t=>`<tr><td><span class="merchant">${escapeHTML(t.name)}</span><span class="sub">${escapeHTML(t.type)}</span></td><td>${escapeHTML(t.date)}</td><td><span class="status completed">${escapeHTML(t.status)}</span></td><td class="amount ${t.amount>0?'positive':'negative'}">${money(t.amount)}</td></tr>`).join('') || '<tr><td colspan="4" class="empty">No matching transactions.</td></tr>';
+    document.getElementById('allRows').innerHTML=rows(filtered);
+    document.getElementById('recentRows').innerHTML=rows(transactions.slice(0,4)).replace(/<td><span class="status completed">Completed<\/span><\/td>/g,'');
+    updateBalance();
+  }
+  function updateBalance(){
+    const current=8240.65+transactions.filter(t=>t.status==='Completed').reduce((sum,t)=>sum+(t.isNew?t.amount:0),0);
+    ['checkingBalance','checkingBalance2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=money(current)});
+    const total=document.getElementById('totalBalance');if(total)total.textContent=money(current+4240);
+  }
+  function renderUsers(){
+    const query=(document.getElementById('userSearch')?.value||'').toLowerCase();
+    const filtered=users.filter(u=>(u.name+' '+u.id+' '+u.type+' '+u.status).toLowerCase().includes(query));
+    document.getElementById('userRows').innerHTML=filtered.map(u=>`<tr><td><span class="merchant">${escapeHTML(u.name)}</span><span class="sub">Fictional customer</span></td><td>${u.id}</td><td>${u.type}</td><td><select aria-label="Status for ${escapeHTML(u.name)}" onchange="setUserStatus('${u.id}',this.value)"><option ${u.status==='Active'?'selected':''}>Active</option><option ${u.status==='Review'?'selected':''}>Review</option><option ${u.status==='Locked'?'selected':''}>Locked</option></select></td></tr>`).join('') || '<tr><td colspan="4" class="empty">No matching users.</td></tr>';
+    document.getElementById('activeCount').textContent=users.filter(u=>u.status==='Active').length;
+  }
+  function setUserStatus(id,status){const user=users.find(u=>u.id===id);if(user){user.status=status;renderUsers();toast(`${user.name} set to ${status} (demo only).`)}}
+  function openTransfer(){document.getElementById('modal').classList.add('open');setTimeout(()=>document.getElementById('recipient').focus(),50)}
+  function closeModal(){document.getElementById('modal').classList.remove('open')}
+  document.getElementById('transferForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=document.getElementById('recipient').value.trim();const amount=Number(document.getElementById('transferAmount').value);
+    if(!name||!Number.isFinite(amount)||amount<=0||amount>5000){toast('Enter a name and an amount from $1 to $5,000.');return}
+    transactions.unshift({name:`Transfer to ${name}`,type:'Simulated transfer · Demo only',date:new Date().toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}),amount:-amount,status:'Completed',isNew:true});
+    closeModal();e.target.reset();renderTransactions();showView('transactions');toast('Demo transfer added. No money moved.');
+  });
+  function toast(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');clearTimeout(window.toastTimeout);window.toastTimeout=setTimeout(()=>t.classList.remove('show'),2600)}
+  function escapeHTML(value){return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  renderTransactions();
+</script>
+</body>
+</html>
